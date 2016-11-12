@@ -1,5 +1,5 @@
 console.log('angular routes initiated');
-var app = angular.module('app', ['ngRoute', 'ngCookies']);
+var app = angular.module('app', ['ngRoute', 'ngCookies', 'ngMessages']);
 app.config(function($routeProvider) {
   $routeProvider
     .when('/', {
