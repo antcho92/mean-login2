@@ -5,7 +5,7 @@ var bcrypt = require('bcrypt');
 var userSchema = new mongoose.Schema({
   email: {
     type: String,
-    unique: true,
+    //unique: true,
     required: true
   },
   firstName: {
@@ -32,7 +32,22 @@ userSchema.methods.validatePassword = function(input) {
 }
 // checks to see if the password and confirm password match
 userSchema.methods.confirmPassword = function(input) {
-  return !(this.password === input);
+  if (this.password !== input) {
+    return {
+      errors: {
+        confirm: {
+          message: 'Password must match password confirmation',
+          name: 'Validator Error'
+        }
+      },
+      message: "User validation failed"
+    }
+  } else {
+    return {
+      success: true,
+      message: "Passwords match"
+    };
+  }
 }
 // runs hash password before saving
 userSchema.pre('save', function(done) {

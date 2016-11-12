@@ -1,18 +1,24 @@
 <div>
   <h3>Register</h3>
   <form ng-submit='LC.register()'>
-    {{errors}}
-    <input ng-model='LC.registration.email' type="email" placeholder="Email Address">
+    <p>{{LC.errors.email.message}}</p>
+    <input ng-model='LC.registration.email' type="text" placeholder="Email Address">
+    <p>{{LC.errors.firstName.message}}</p>
     <input ng-model='LC.registration.firstName' placeholder="First Name">
+    <p>{{LC.errors.lastName.message}}</p>
     <input ng-model='LC.registration.lastName' placeholder="Last Name">
+    <p>{{LC.errors.password.message}}</p>
     <input ng-model='LC.registration.password' type="password" placeholder="Password">
+    <p>{{LC.errors.confirm.message}}</p>
     <input ng-model='LC.registration.confirm' type="password" placeholder="Confirm Password">
     <input type="submit" value="Register User">
   </form>
 </div>
 <div>
   <h3>Login</h3>
+  <p>{{LC.success}}</p>
   <form ng-submit='LC.login()'>
+    <p>{{LC.errors.login.message}}</p>
     <input ng-model='LC.userLogin.email' placeholder="Email Address">
     <input ng-model='LC.userLogin.password' type="password" placeholder='Password'>
     <input type="submit" value='Login'>

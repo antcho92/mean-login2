@@ -1,6 +1,14 @@
 app.controller('loginController', ['$scope', 'usersFactory', function($scope, uF) {
   console.log('login controller loaded');
   var self = this;
+  var errCallback = function(errors) {
+    self.errors = errors;
+  }
+  var successCallback = function(data) {
+    self.success = data.message;
+  }
+
+
   this.register = function() {
     // Client side password matching
     // if (this.registration.password !== this.registration.confirm) {
@@ -12,9 +20,9 @@ app.controller('loginController', ['$scope', 'usersFactory', function($scope, uF
         self.errors = res.data.errors;
       }
       self.registration = {};
-    });
+    }, errCallback);
   }
   this.login = function() {
-    uF.login(this.userLogin);
+    uF.login(this.userLogin, successCallback);
   }
 }])
