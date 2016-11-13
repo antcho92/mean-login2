@@ -1,4 +1,4 @@
-app.controller('loginController', ['$scope', 'usersFactory', function($scope, uF) {
+app.controller('loginController', ['$scope', 'usersFactory', '$cookies', function($scope, uF, $cookies) {
   console.log('login controller loaded');
   var self = this;
   var errCallback = function(errors) {
@@ -10,7 +10,7 @@ app.controller('loginController', ['$scope', 'usersFactory', function($scope, uF
 
 
   this.register = function() {
-    // Client side password matching
+    //Client side password matching
     // if (this.registration.password !== this.registration.confirm) {
     //   console.log('Password must match confirmation.')
     //   return;

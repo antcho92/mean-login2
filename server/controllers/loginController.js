@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
+// immediate invoked function returns the object with methods we want to use in the routes.js file
 module.exports = (function() {
   return {
     index: function(req, res) {

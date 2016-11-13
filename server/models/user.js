@@ -5,20 +5,27 @@ var bcrypt = require('bcrypt');
 var userSchema = new mongoose.Schema({
   email: {
     type: String,
-    //unique: true,
-    required: true
+    required: [true, 'email cannot be blank'],
+    unique: [true, 'email is already in database'],
+    validate:[{
+      validator: function(email) {
+        // email regex
+        return /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/.test(email);
+      },
+      message: '{VALUE} is not a valid email'
+    }]
   },
   firstName: {
     type: String,
-    required: true
+    required: [true, 'First name cannot be blank']
   },
   lastName: {
     type: String,
-    required: true
+    required: [true, 'Last name cannot be blank']
   },
   password: {
     type: String,
-    required: true
+    required: [true, 'Password cannot be blank']
   }
 }, {timestamps: true});
 
