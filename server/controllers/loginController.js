@@ -16,29 +16,39 @@ module.exports = (function() {
     },
     register: function(req, res) {
       var userInstance = new User(req.body);
-      var confirmPw = userInstance.confirmPassword(req.body.confirm)
-      if (confirmPw.errors) {
-        res.json(confirmPw);
-      } else {
-        userInstance.save(function(err, newUser) {
-          if (err) {res.json(err)}
-          else {
-            res.json({
-              _id: newUser._id
-            });
-          }
-        });
-      }
+      userInstance.save(function(err, newUser) {
+        //check for password confirmation
+        if (req.body.password !== req.body.confirm) {
+          err.errors.confirm = {
+            message: 'Password must match password confirmation',
+            name: 'Validator Error'
+          };
+        }
+        if (err) {
+          res.json(err)
+        } else {
+          res.json({
+            _id: newUser._id
+          });
+        }
+      });
     },
     login: function(req, res) {
-      User.findOne({email: req.body.email}, function(err, user) {
+      User.findOne({
+        email: req.body.email
+      }, function(err, user) {
         if (err) {
           res.json(err);
         } else {
           if (user.validatePassword(req.body.password)) {
-            res.json({'_id': user._id, 'message': 'sucessfully logged in'});
+            res.json({
+              '_id': user._id,
+              'message': 'sucessfully logged in'
+            });
           } else {
-            res.json({errors: 'Invalid email and/or username'});
+            res.json({
+              errors: 'Invalid email and/or username'
+            });
           }
         }
       });

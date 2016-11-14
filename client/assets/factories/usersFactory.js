@@ -4,11 +4,11 @@ app.factory('usersFactory', ['$http', function($http) {
     var self = this;
     this.register = function(user, callback, errCallback) {
       $http.post('/users', user).then(function(res) {
-        console.log(res.data);
         if (res.data.errors) {
           console.log(res.data.message);
           errCallback(res.data.errors);
         } else {
+          console.log(res.data._id);
           console.log('no errors registering');
         }
       });

@@ -6,7 +6,7 @@ var userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: [true, 'email cannot be blank'],
-    unique: [true, 'email is already in database'],
+    unique: true,
     validate:[{
       validator: function(email) {
         // email regex
@@ -36,25 +36,6 @@ userSchema.methods.hashPassword = function(password) {
 //checks if input password's hash matches the stored hash
 userSchema.methods.validatePassword = function(input) {
   return bcrypt.compareSync(input, this.password);
-}
-// checks to see if the password and confirm password match
-userSchema.methods.confirmPassword = function(input) {
-  if (this.password !== input) {
-    return {
-      errors: {
-        confirm: {
-          message: 'Password must match password confirmation',
-          name: 'Validator Error'
-        }
-      },
-      message: "User validation failed"
-    }
-  } else {
-    return {
-      success: true,
-      message: "Passwords match"
-    };
-  }
 }
 // runs hash password before saving
 userSchema.pre('save', function(done) {
